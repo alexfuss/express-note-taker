@@ -1,22 +1,22 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 let app = express();
-let db = require("./Proj_files/Develop/db/db.json");
+let db = require("../express-note-taker/Proj_files/Develop/db/db.json");
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
 const dbNotes = JSON.parse(
-fs.readFileSync(path.join(__dirname, "/db/db.json"), (err, data) => {
+fs.readFileSync(path.join(__dirname, "../express-note-taker/Proj_files/Develop/db/db.json"), (err, data) => {
     if (err) throw err;
 })
 );
 
 const dbUpdate = dbNotes => {
 fs.writeFileSync(
-    path.join(__dirname, "/db/db.json"),
+    path.join(__dirname, "../express-note-taker/Proj_files/Develop/db/db.json"),
     JSON.stringify(dbNotes),
     err => {
     if (err) throw err;
@@ -26,19 +26,19 @@ fs.writeFileSync(
 
 // these first app.get requests are for the html pages
 app.get("/assets/css/styles.css", function(req, res) {
-res.sendFile(path.join(__dirname, "/public/assets/css/styles.css"));
+res.sendFile(path.join(__dirname, "./Proj_files/Develop/assets/css/style.css"));
 });
 
 app.get("/assets/js/index.js", function(req, res) {
-res.sendFile(path.join(__dirname, "/public/assets/js/index.js"));
+res.sendFile(path.join(__dirname, "./Proj_files/Develop/assets/js/index.js"));
 });
 
 app.get("/", function(req, res) {
-res.sendFile(path.join(__dirname, "public/index.html"));
+res.sendFile(path.join(__dirname, "./Proj_files/Develop/public/index.html"));
 });
 
 app.get("/notes", function(req, res) {
-res.sendFile(path.join(__dirname, "/public/notes.html"));
+res.sendFile(path.join(__dirname, "./Proj_files/Develop/public/notes.html"));
 });
 
 app.get("/api/notes", function(req, res) {
